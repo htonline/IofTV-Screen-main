@@ -71,7 +71,7 @@ export default {
       defaultOption: {
         ...this.$store.state.setting.defaultOption,
         limitMoveNum: 3,
-        singleHeight: 250, 
+        singleHeight: 250,
         step:0,
       },
 

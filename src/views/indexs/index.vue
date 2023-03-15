@@ -17,7 +17,7 @@
         <LeftCenter />
       </ItemWrap>
 <!--      左边-下部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="设备仪器" style="padding: 0 10px 16px 10px">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="病害信息表" style="padding: 0 10px 16px 10px">
         <LeftBottom />
       </ItemWrap>
     </div>
@@ -28,7 +28,7 @@
 <!--      中间-地图部分-->
       <CenterMap class="contetn_center_top" />
 <!--      中间-下部图表部分-->
-      <ItemWrap class="contetn_center-bottom" title="地质图层">
+      <ItemWrap class="contetn_center-bottom" title="城市修复一览">
         <CenterBottom />
       </ItemWrap>
     </div>
@@ -36,15 +36,15 @@
 <!--    右边部分-->
     <div class="contetn_right">
 <!--      右边-上部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="报警次数">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="相关图片">
         <RightTop />
       </ItemWrap>
 <!--      右边-中间部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="各省市病害数量统计(Top8)" style="padding: 0 10px 16px 10px">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="雷达数据图" style="padding: 0 10px 16px 10px">
         <RightCenter />
       </ItemWrap>
 <!--      右边-下部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="病害信息表 ">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="DiseaseDescription">
         <RightBottom />
       </ItemWrap>
     </div>
