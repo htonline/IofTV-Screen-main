@@ -1,138 +1,176 @@
 <template>
   <div class="center_bottom">
-    <div id="main" class="echarts_bottom"></div>
+    <Echart
+        :options="options"
+        id="bottomLeftChart"
+        class="echarts_bottom"
+    ></Echart>
   </div>
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import 'echarts-gl';
-
-
+import { currentGET } from "api";
+import { graphic } from "echarts";
 export default {
+  data() {
+    return {
+      options: {},
+    };
+  },
+  props: {},
   mounted() {
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom, 'dark');
-    var option;
-
-    // 异步加载 SimplexNoise 库
-    //simplex-noise 库是一个用于生成 2D 和 3D 噪声的 JavaScript 库，
-    // 可以用于创建流动的云、火焰、水面、地形、动画等效果。
-    this.loadScript('https://fastly.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.js', function () {
-      // 创建 SimplexNoise 实例
-      var noise = new SimplexNoise(Math.random);
-
-      function generateData(theta, min, max) {
-        var data = [];
-        for (var i = 0; i <= 50; i++) {
-          for (var j = 0; j <= 50; j++) {
-            var value = noise.noise2D(i / 20, j / 20);
-            valMax = Math.max(valMax, value);
-            valMin = Math.min(valMin, value);
-            data.push([i, j, value * 2 + 4]);
-          }
-        }
-        return data;
-      }
-
-      var valMin = Infinity;
-      var valMax = -Infinity;
-      var data = generateData(2, -5, 5);
-      console.log(valMin, valMax);
-      console.log("datadata",data);
-      myChart.setOption(
-          (option = {
-            visualMap: {
-              show: false,
-              min: 2,
-              max: 6,
-              inRange: {
-                color: [
-                  '#313695',
-                  '#4575b4',
-                  '#74add1',
-                  '#abd9e9',
-                  '#e0f3f8',
-                  '#ffffbf',
-                  '#fee090',
-                  '#fdae61',
-                  '#f46d43',
-                  '#d73027',
-                  '#a50026'
-                ]
-              }
-            },
-            xAxis3D: {
-              type: 'value'
-            },
-            yAxis3D: {
-              type: 'value'
-            },
-            zAxis3D: {
-              type: 'value',
-              max: 10,
-              min: 0
-            },
-            grid3D: {
-              axisLine: {
-                lineStyle: {color: '#fff'}
-              },
-              axisPointer: {
-                lineStyle: {color: '#fff'}
-              },
-              viewControl: {
-                // autoRotate: true
-              },
-              light: {
-                main: {
-                  shadow: true,
-                  quality: 'ultra',
-                  intensity: 1.5
-                }
-              }
-            },
-            series: [
-              {
-                type: 'bar3D',
-                data: data,
-                shading: 'lambert',
-                label: {
-                  formatter: function (param) {
-                    return param.value[2].toFixed(1);
-                  }
-                }
-              }
-            ]
-          })
-      );
-    });
-
-    option && myChart.setOption(option);
+    this.getData();
   },
   methods: {
-    loadScript(url, callback) {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
+    getData() {
+      this.pageflag = true;
+      currentGET("big6", { companyName: this.companyName }).then((res) => {
+        console.log("安装计划", res);
+        if (res.success) {
+          this.init(res.data);
+        } else {
+          this.pageflag = false;
+          this.$Message({
+            text: res.msg,
+            type: "warning",
+          });
+        }
+      });
+    },
+    init(newData) {
+      this.options = {
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(0,0,0,.6)",
+          borderColor: "rgba(147, 235, 248, .8)",
+          textStyle: {
+            color: "#FFF",
+          },
+          formatter: function (params) {
+            // 添加单位
+            var result = params[0].name + "<br>";
+            params.forEach(function (item) {
+              if (item.value) {
+                if (item.seriesName == "安装率") {
+                  result +=
+                      item.marker +
+                      " " +
+                      item.seriesName +
+                      " : " +
+                      item.value +
+                      "%</br>";
+                } else {
+                  result +=
+                      item.marker +
+                      " " +
+                      item.seriesName +
+                      " : " +
+                      item.value +
+                      "个</br>";
+                }
+              } else {
+                result += item.marker + " " + item.seriesName + " :  - </br>";
+              }
+            });
+            return result;
+          },
+        },
+        legend: {
+          data: ["已安装", "计划安装", "安装率"],
+          textStyle: {
+            color: "#B4B4B4",
+          },
+          top: "0",
+        },
+        grid: {
+          left: "50px",
+          right: "40px",
+          bottom: "30px",
+          top: "20px",
+        },
+        xAxis: {
+          data: newData.category,
+          axisLine: {
+            lineStyle: {
+              color: "#B4B4B4",
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+        },
+        yAxis: [
+          {
+            splitLine: { show: false },
+            axisLine: {
+              lineStyle: {
+                color: "#B4B4B4",
+              },
+            },
 
-      if (script.readyState) {
-        // IE
-        script.onreadystatechange = function () {
-          if (script.readyState == 'loaded' || script.readyState == 'complete') {
-            script.onreadystatechange = null;
-            callback();
-          }
-        };
-      } else {
-        // Others
-        script.onload = function () {
-          callback();
-        };
-      }
-
-      script.src = url;
-      document.getElementsByTagName('head')[0].appendChild(script);
-    }
-  }
+            axisLabel: {
+              formatter: "{value}",
+            },
+          },
+          {
+            splitLine: { show: false },
+            axisLine: {
+              lineStyle: {
+                color: "#B4B4B4",
+              },
+            },
+            axisLabel: {
+              formatter: "{value}% ",
+            },
+          },
+        ],
+        series: [
+          {
+            name: "已安装",
+            type: "bar",
+            barWidth: 10,
+            itemStyle: {
+              borderRadius: 5,
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#956FD4" },
+                { offset: 1, color: "#3EACE5" },
+              ]),
+            },
+            data: newData.barData,
+          },
+          {
+            name: "计划安装",
+            type: "bar",
+            barGap: "-100%",
+            barWidth: 10,
+            itemStyle: {
+              borderRadius: 5,
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "rgba(156,107,211,0.8)" },
+                { offset: 0.2, color: "rgba(156,107,211,0.5)" },
+                { offset: 1, color: "rgba(156,107,211,0.2)" },
+              ]),
+            },
+            z: -12,
+            data: newData.lineData,
+          },
+          {
+            name: "安装率",
+            type: "line",
+            smooth: true,
+            showAllSymbol: true,
+            symbol: "emptyCircle",
+            symbolSize: 8,
+            yAxisIndex: 1,
+            itemStyle: {
+              color: "#F02FC2",
+            },
+            data: newData.rateData,
+          },
+        ],
+      };
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

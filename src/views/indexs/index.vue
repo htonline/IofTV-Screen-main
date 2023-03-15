@@ -1,3 +1,6 @@
+
+<!--各边框主题的更改-->
+
 <template>
   <div class="contents">
     <div class="contetn_left">
@@ -6,7 +9,7 @@
       </div>
 
 <!--      左边-上部分-->
-      <ItemWrap class="contetn_left-top contetn_lr-item" title="设备总览">
+      <ItemWrap class="contetn_left-top contetn_lr-item" title="病害总览">
         <LeftTop />
       </ItemWrap>
 <!--      左边-中间部分-->

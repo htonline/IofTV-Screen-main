@@ -1,9 +1,5 @@
 <!--
- * @Author: daidai
- * @Date: 2022-01-12 14:23:32
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-09-09 14:47:24
- * @FilePath: \web-pc\src\pages\big-screen\view\home.vue
+头部的更改
 -->
 <template>
   <!-- <div id="index" ref="appRef" class="index_home" :class="{ pageisScale: isScale }"> -->
@@ -23,7 +19,7 @@
           <div class="guang"></div>
           <div class="d-flex jc-center">
             <div class="title">
-              <span class="title-text">互联网设备可视化平台</span>
+              <span class="title-text">雷达数据平台开发</span>
             </div>
           </div>
           <div class="timers">

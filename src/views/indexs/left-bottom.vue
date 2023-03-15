@@ -1,165 +1,172 @@
-
 <template>
-  <div
-    v-if="pageflag"
-    class="left_boottom_wrap beautify-scroll-def"
-    :class="{ 'overflow-y-auto': !sbtxSwiperFlag }"
-  >
+  <div v-if="pageflag" class="right_center_wrap beautify-scroll-def" :class="{ 'overflow-y-auto': !sbtxSwiperFlag }">
     <component :is="components" :data="list" :class-option="defaultOption">
-      <ul class="left_boottom">
-        <li class="left_boottom_item" v-for="(item, i) in list" :key="i">
-          <span class="orderNum doudong">{{ i + 1 }}</span>
+      <ul class="right_center ">
+        <li class="right_center_item" v-for="(item, i) in list" :key="i" @click="sendlntlat(item)">
+          <span class="orderNum">{{ i + 1 }}</span>
           <div class="inner_right">
             <div class="dibu"></div>
             <div class="flex">
-              <div class="info">
-                <span class="labels">设备ID：</span>
-                <span class="contents zhuyao doudong wangguan">
-                  {{ item.gatewayno }}</span
-                >
+              <div class="info" >
+                <span class="labels">经度：</span>
+                <span class="contents "> {{ item.detectPositionLng }}</span>
               </div>
               <div class="info">
-                <span class="labels">类别：</span>
-<!--                <span class="contents " style="font-size: 12px">{{ item.createTime }}</span>-->
-                <span class="contents " style="color: #e3b337; font-size: 15px">雷达</span>
+                <span class="labels">纬度：</span>
+                <span class="contents "> {{ item.detectPositionLat }}</span>
+              </div>
+              <div class="info">
+                <span class="labels">病害类型：</span>
+                <!--                如果item.alertvalue有值，就输出，否则输出montionFilter,这是个空值-->
+                <!--                <span class="contents warning"> {{ item.alertvalue | montionFilter }}</span>-->
+                <span class="contents warning" style="color: red;"> {{ item.disease }}</span>
               </div>
             </div>
 
-              <span class="types doudong" :class="{
-                  typeRed: item.onlineState == 0,
-                  typeGreen: item.onlineState == 1,
-                }"
-                >{{ item.onlineState == 1 ? "上线" : "下线" }}</span
-              >
 
-            <div class="info addresswrap">
-              <span class="labels">地址：</span>
-              <span class="contents ciyao" style="font-size: 12px">
-                {{ addressHandle(item) }}</span
-              >
+            <div class="flex">
+
+              <div class="info">
+                <span class="labels"> 地址：</span>
+                <!--                <span class="contents ciyao" style="font-size:12px"> {{ item.provinceName }}/{{ item.cityName }}/{{ item.countyName }}</span>-->
+                <span class="contents ciyao" style="font-size:12px"> {{ item.detectPart }}</span>
+              </div>
+              <div class="info time">
+                <span class="labels">时间：</span>
+                <span class="contents" style="font-size:12px"> {{ item.createTime }}</span>
+              </div>
+
+            </div>
+            <div class="flex">
+
+              <div class="info">
+                <span class="labels">详细内容：</span>
+                <span class="contents ciyao" :class="{ warning: item.diseaseDescription }"> {{ item.diseaseDescription || '无'
+                  }}</span>
+              </div>
             </div>
           </div>
         </li>
       </ul>
     </component>
   </div>
+  <Reacquire v-else @onclick="getData" style="line-height:200px" />
 
-  <Reacquire v-else @onclick="getData" style="line-height: 200px" />
 </template>
 
 <script>
-import { currentGET } from "api";
-import vueSeamlessScroll from "vue-seamless-scroll"; // vue2引入方式
-import Kong from "../../components/kong.vue";
+import {currentGET, getLngLat} from 'api/modules'
+import vueSeamlessScroll from 'vue-seamless-scroll'  // vue2引入方式(无缝滚动)
+import Kong from '../../components/kong.vue'
+
+import bus from '../../utils/bus'
+
 export default {
   components: { vueSeamlessScroll, Kong },
+
   data() {
     return {
       list: [],
       pageflag: true,
-      components: vueSeamlessScroll,
       defaultOption: {
         ...this.$store.state.setting.defaultOption,
-        singleHeight: 240,
-        limitMoveNum: 5, 
-        step: 0,
+        limitMoveNum: 3,
+        singleHeight: 250,
+        step:0,
       },
+
     };
   },
   computed: {
     sbtxSwiperFlag() {
-      let sbtxSwiper = this.$store.state.setting.sbtxSwiper;
-      if (sbtxSwiper) {
-        this.components = vueSeamlessScroll;
+      let ssyjSwiper = this.$store.state.setting.ssyjSwiper
+      if (ssyjSwiper) {
+        this.components = vueSeamlessScroll
       } else {
-        this.components = Kong;
+        this.components = Kong
       }
-      return sbtxSwiper;
-    },
+      return ssyjSwiper
+    }
   },
   created() {
-    
+    this.getData()
   },
 
-  mounted() {
-    this.getData();
-  },
+  mounted() { },
   methods: {
-    addressHandle(item) {
-      let name = item.provinceName;
-      if (item.cityName) {
-        name += "/" + item.cityName;
-        if (item.countyName) {
-          name += "/" + item.countyName;
-        }
+    // 发送点击框的经纬度
+    sendlntlat(item) {
+      let data = {
+        positionLng: item.detectPositionLng,
+        positionLat: item.detectPositionLat,
+        startPointLng: item.startPointLng,
+        startPointLat: item.startPointLat,
+        stopPointLng: item.stopPointLng,
+        stopPointLat: item.stopPointLat,
+        pieceId: item.pieceId
       }
-      return name;
+      //给地图发数据
+      bus.$emit('right_bottom_sendLngLat',data)
+      //给地图下面那个框，发数据
+      bus.$emit('center_bottom_sendPieceId',data)
     },
     getData() {
-      this.pageflag = true;
-      // this.pageflag =false
-      currentGET("big3", { limitNum: 20 }).then((res) => {
-        console.log("设备提醒", res);
-        if (res.success) {
-          this.countUserNumData = res.data;
-          this.list = res.data.list;
-          let timer = setTimeout(() => {
-            clearTimeout(timer);
-            this.defaultOption.step =
-              this.$store.state.setting.defaultOption.step;
-          }, this.$store.state.setting.defaultOption.waitTime);
-        } else {
-          this.pageflag = false;
-          this.$Message({
-            text: res.msg,
-            type: "warning",
-          });
-        }
-      });
+      this.pageflag = true
+      // 获取分段信息的所有数据
+      getLngLat().then(res => {
+        console.log("数据打通:", res);
+        this.list = res.object
+        let timer = setTimeout(() => {
+          clearTimeout(timer)
+          // this.defaultOption.step=this.$store.state.setting.defaultOption.step
+          this.defaultOption.step=1
+        }, this.$store.state.setting.defaultOption.waitTime);
+      })
     },
   },
 };
 </script>
 <style lang='scss' scoped>
-.left_boottom_wrap {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.doudong {
-  //  vertical-align:middle;
-  overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
-.left_boottom {
+.right_center {
   width: 100%;
   height: 100%;
 
-  .left_boottom_item {
+  .right_center_item {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    height: auto;
+    padding: 10px;
     font-size: 14px;
-    margin: 10px 0;
+    color: #fff;
+
     .orderNum {
-      margin: 0 16px 0 -20px;
+      margin: 0 20px 0 -20px;
+    }
+
+
+    .inner_right {
+      position: relative;
+      height: 100%;
+      width: 400px;
+      flex-shrink: 0;
+      line-height: 1.5;
+
+      .dibu {
+        position: absolute;
+        height: 2px;
+        width: 104%;
+        background-image: url("../../assets/img/zuo_xuxian.png");
+        bottom: -12px;
+        left: -2%;
+        background-size: cover;
+      }
     }
 
     .info {
       margin-right: 10px;
       display: flex;
       align-items: center;
-      color: #fff;
 
       .labels {
         flex-shrink: 0;
@@ -177,70 +184,21 @@ export default {
       }
 
       .warning {
-        color: #e6a23c;
+        color: #E6A23C;
         font-size: 15px;
       }
     }
 
-    .inner_right {
-      position: relative;
-      height: 100%;
-      width: 380px;
-      flex-shrink: 0;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      .dibu {
-        position: absolute;
-        height: 2px;
-        width: 104%;
-        background-image: url("../../assets/img/zuo_xuxian.png");
-        bottom: -10px;
-        left: -2%;
-        background-size: cover;
-      }
-      .addresswrap {
-        width: 100%;
-        display: flex;
-        margin-top: 8px;
-      }
-    }
-
-    .wangguan {
-      color: #1890ff;
-      font-weight: 900;
-      font-size: 15px;
-      width: 80px;
-      flex-shrink: 0;
-    }
-
-
-    .time {
-      font-size: 12px;
-      // color: rgba(211, 210, 210,.8);
-      color: #fff;
-    }
-
-    .address {
-      font-size: 12px;
-      cursor: pointer;
-      // @include text-overflow(1);
-    }
-
-    .types {
-      width: 30px;
-      flex-shrink: 0;
-    }
-
-    .typeRed {
-      color: #fc1a1a;
-    }
-
-    .typeGreen {
-      color: #29fc29;
-    }
   }
+}
+
+.right_center_wrap {
+  overflow: hidden;
+  width: 100%;
+  height: 250px;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 </style>
