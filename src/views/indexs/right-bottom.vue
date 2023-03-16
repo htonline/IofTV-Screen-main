@@ -2,33 +2,47 @@
   <div class="container">
     <div class="left">
       <div class="content">
-        <h2>路基空洞</h2>
-        <p>{{ description }}</p>
+        <h2>{{ diseaseType }}</h2>
+        <p>{{ diseaseDescription }}</p>
       </div>
     </div>
     <div class="right">
       <div class="content">
-        <h2>修复方式</h2>
-        <p>{{ repair }}</p>
+        <h2>治疗方式</h2>
+        <p>{{ repairMethod }}</p>
       </div>
       <div class="content">
+<!--        是否修复-->
         <h2>描述性内容</h2>
-        <p>实施常规化的地下空洞探测和填补</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
+
+import bus from '../../utils/bus'
 export default {
   data() {
     return {
-      title: '页面标题',
-      description: '这是一个页面标题的描述性内容，可能比较长，需要占用较多的空间。',
-      description2: '这是右侧下方的描述性内容，也可能比较长。',
-      repair: '这里是修复方式的描述性内容。',
+      diseaseType: '路基空洞',
+      diseaseDescription: '',
+      repairMethod: '',
+      tunnelState: ""
     };
   },
+
+  created() {
+    bus.$on("sendDisease", (data) => {
+      console.log("sendDisease", data)
+      this.diseaseType = data.diseaseType
+      this.diseaseDescription = data.diseaseDescription
+      this.repairMethod = data.repairMethod
+      this.tunnelState = data.tunnelState
+    })
+  }
+
 };
 </script>
 

@@ -5,7 +5,7 @@
   <div class="contents">
     <div class="contetn_left">
       <div class="pagetab">
-        <!-- <div class="item">实时监测</div> -->
+<!--         <div class="item">实时监测</div>-->
       </div>
 
 <!--      左边-上部分-->
@@ -28,7 +28,7 @@
 <!--      中间-地图部分-->
       <CenterMap class="contetn_center_top" />
 <!--      中间-下部图表部分-->
-      <ItemWrap class="contetn_center-bottom" title="城市修复一览">
+      <ItemWrap class="contetn_center-bottom" title="城市数据一览">
         <CenterBottom />
       </ItemWrap>
     </div>
@@ -36,7 +36,7 @@
 <!--    右边部分-->
     <div class="contetn_right">
 <!--      右边-上部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="相关图片">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="现场图片">
         <RightTop />
       </ItemWrap>
 <!--      右边-中间部分-->
@@ -44,7 +44,7 @@
         <RightCenter />
       </ItemWrap>
 <!--      右边-下部分-->
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="DiseaseDescription">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="病害描述">
         <RightBottom />
       </ItemWrap>
     </div>

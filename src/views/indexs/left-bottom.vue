@@ -109,12 +109,18 @@ export default {
         startPointLat: item.tunnelStartPointLat,
         stopPointLng: item.tunnelStopPointLng,
         stopPointLat: item.tunnelStopPointLat,
-        pieceId: item.tunnelId
+        pieceId: item.tunnelId,
+        diseaseType: item.diseaseType,
+        diseaseDescription: item.diseaseDescription,
+        repairMethod: item.repairMethod,
+        tunnelState: item.tunnelState // 如果等于4，说明已修复; 否则没有;
       }
-      //给地图发数据
+      //给地图发数据, 让地图定位
       bus.$emit('sendLngLat',data)
       //给右上角发tunnelId, 获取它对应的图片
       bus.$emit('sendTunnelId',data)
+      // 给右下角发数据, 展示病害的详细内容
+      bus.$emit("sendDisease", data)
     },
     getData() {
       this.pageflag = true
