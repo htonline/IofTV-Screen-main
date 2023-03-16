@@ -43,9 +43,12 @@
             <div class="flex">
 
               <div class="info">
-                <span class="labels">详细内容：</span>
-                <span class="contents ciyao" :class="{ warning: item.diseaseDescription }"> {{ item.diseaseDescription || '无'
-                  }}</span>
+                <span class="labels">状态：</span>
+<!--                <span class="contents ciyao" :class="{ warning: item.diseaseDescription }"> {{ item.diseaseDescription || '无' }}</span>-->
+                <span class="contents ciyao" v-if="item.tunnelState == 1" style="color: #f5023d;" > 紧急</span>
+                <span class="contents ciyao" v-if="item.tunnelState == 2" style="color: #e3b337;" > 一般</span>
+                <span class="contents ciyao" v-if="item.tunnelState == 3" style="color: #07f7a8;" > 正在修复</span>
+                <span class="contents ciyao" v-if="item.tunnelState == 4" style="color: gray;"> 已修复</span>
               </div>
             </div>
           </div>
