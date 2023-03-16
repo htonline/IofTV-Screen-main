@@ -89,7 +89,7 @@ export const getPictureByTunnelID = async (params) => {
     try {
         // 加密参数
         params = {
-            tunnelId: params
+            "tunnelId": params
         }
         const data = await axios.get(`http://localhost:9090/picture/`, {
             params: params,
