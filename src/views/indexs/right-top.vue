@@ -40,8 +40,6 @@ export default {
         this.requiredUrls = this.urls.map(url => require("@/assets/"+url));
         console.log("requiredUrls",this.requiredUrls);
 
-        // this.items = this.requiredUrls.map(url => ({ image: { uri: url } }));
-
         // 轮播图清空
         this.items = []
         // 将从数据库中拿到的地址放入轮播图中
