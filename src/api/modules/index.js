@@ -77,8 +77,8 @@ export const currentPage =  (key,param)=> {
     return API.GET(paramType[key], param)
 }
 
-export const getLngLat=  (key,param)=> {
-    return API.getLngLat(paramType[key], param)
+export const getTunnelData=  (key,param)=> {
+    return API.getTunnelData(paramType[key], param)
 }
 export const statisticsDiseaseTypesCounts=  (key,param)=> {
     return API.statisticsDiseaseTypesCounts(paramType[key], param)

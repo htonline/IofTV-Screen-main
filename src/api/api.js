@@ -70,11 +70,11 @@ export const GET = async (url, params) => {
     }
 }
 
-export const getLngLat = async (params) => {
+export const getTunnelData = async (params) => {
     try {
         // 加密参数
         params = isEncryptionParam(params)
-        const data = await axios.get(`http://localhost:9090/piece/`, {
+        const data = await axios.get(`http://localhost:9090/tunnel/`, {
             params: params,
             headers: configs_ENC.headers
         }, configs_ENC);

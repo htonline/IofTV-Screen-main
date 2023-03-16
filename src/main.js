@@ -1,10 +1,4 @@
-/*
- * @Author: daidai
- * @Date: 2022-01-12 14:05:56
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-09-27 14:55:57
- * @FilePath: \web-pc\src\pages\big-screen\main.js
- */
+
 import Vue from "vue";
 import App from "./App.vue";
 import router from './router'

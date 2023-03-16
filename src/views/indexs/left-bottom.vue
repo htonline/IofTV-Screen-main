@@ -9,17 +9,20 @@
             <div class="flex">
               <div class="info" >
                 <span class="labels">经度：</span>
-                <span class="contents "> {{ item.detectPositionLng }}</span>
+                <span class="contents "> {{ item.detectLocationLng }}</span>
               </div>
               <div class="info">
                 <span class="labels">纬度：</span>
-                <span class="contents "> {{ item.detectPositionLat }}</span>
+                <span class="contents "> {{ item.detectLocationLat }}</span>
               </div>
               <div class="info">
                 <span class="labels">病害类型：</span>
                 <!--                如果item.alertvalue有值，就输出，否则输出montionFilter,这是个空值-->
                 <!--                <span class="contents warning"> {{ item.alertvalue | montionFilter }}</span>-->
-                <span class="contents warning" style="color: red;"> {{ item.disease }}</span>
+                <span class="contents warning" v-if="item.tunnelState == 1" style="color: #f5023d;"> {{ item.diseaseType }}</span>
+                <span class="contents warning" v-if="item.tunnelState == 2" style="color: #e3b337;"> {{ item.diseaseType }}</span>
+                <span class="contents warning" v-if="item.tunnelState == 3" style="color: #07f7a8;"> {{ item.diseaseType }}</span>
+                <span class="contents warning" v-if="item.tunnelState == 4" style="color: gray;"> {{ item.diseaseType }}</span>
               </div>
             </div>
 
@@ -29,7 +32,7 @@
               <div class="info">
                 <span class="labels"> 地址：</span>
                 <!--                <span class="contents ciyao" style="font-size:12px"> {{ item.provinceName }}/{{ item.cityName }}/{{ item.countyName }}</span>-->
-                <span class="contents ciyao" style="font-size:12px"> {{ item.detectPart }}</span>
+                <span class="contents ciyao" style="font-size:12px"> {{ item.detectLocation }}</span>
               </div>
               <div class="info time">
                 <span class="labels">时间：</span>
@@ -55,7 +58,7 @@
 </template>
 
 <script>
-import {currentGET, getLngLat} from 'api/modules'
+import {currentGET, getTunnelData} from 'api/modules'
 import vueSeamlessScroll from 'vue-seamless-scroll'  // vue2引入方式(无缝滚动)
 import Kong from '../../components/kong.vue'
 
@@ -97,13 +100,13 @@ export default {
     // 发送点击框的经纬度
     sendlntlat(item) {
       let data = {
-        positionLng: item.detectPositionLng,
-        positionLat: item.detectPositionLat,
-        startPointLng: item.startPointLng,
-        startPointLat: item.startPointLat,
-        stopPointLng: item.stopPointLng,
-        stopPointLat: item.stopPointLat,
-        pieceId: item.pieceId
+        positionLng: item.detectLocationLng,
+        positionLat: item.detectLocationLat,
+        startPointLng: item.tunnelStartPointLng,
+        startPointLat: item.tunnelStartPointLat,
+        stopPointLng: item.tunnelStopPointLng,
+        stopPointLat: item.tunnelStopPointLat,
+        pieceId: item.tunnelId
       }
       //给地图发数据
       bus.$emit('right_bottom_sendLngLat',data)
@@ -112,9 +115,9 @@ export default {
     },
     getData() {
       this.pageflag = true
-      // 获取分段信息的所有数据
-      getLngLat().then(res => {
-        console.log("数据打通:", res);
+      // 获取隧道信息的所有数据
+      getTunnelData().then(res => {
+        console.log("getTunnelData:", res);
         this.list = res.object
         let timer = setTimeout(() => {
           clearTimeout(timer)
