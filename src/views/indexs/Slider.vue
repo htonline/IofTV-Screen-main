@@ -65,7 +65,8 @@ export default {
 
 .pictureSize {
   position: relative;
-  top: -150px;
+  top: -125px;
+
 }
 
 .slider {
