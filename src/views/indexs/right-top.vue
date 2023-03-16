@@ -1,5 +1,5 @@
 <template>
-  <slider :items="items"></slider>
+    <slider :items="items"></slider>
 </template>
 
 <script>
@@ -12,10 +12,10 @@ export default {
   data() {
     return {
       items: [
-        { image: './test_img/1.png' },
-        { image: './test_img/2.png' },
-        { image: './test_img/3.png' },
-        { image: './test_img/4.png' },
+        { image: require("../../assets/img/test/1.png") },
+        { image: require("../../assets/img/test/2.png") },
+        { image: require("../../assets/img/test/3.png") },
+        { image: require("../../assets/img/test/4.png") },
         // { image: 'https://example.com/image3.jpg' }
       ]
     }

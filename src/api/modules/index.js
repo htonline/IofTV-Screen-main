@@ -1,10 +1,4 @@
-/*
- * @Author: daidai
- * @Date: 2021-12-23 11:18:37
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-28 15:10:45
- * @FilePath: \web-pc\src\api\modules\index.js
- */
+
 import * as API from "../api";
 
 export const paramType ={
