@@ -100,7 +100,7 @@ export default {
 
   mounted() { },
   methods: {
-    // 发送点击框的经纬度
+    // 发送点击框的基本信息
     sendlntlat(item) {
       let data = {
         positionLng: item.detectLocationLng,
@@ -112,9 +112,9 @@ export default {
         pieceId: item.tunnelId
       }
       //给地图发数据
-      bus.$emit('right_bottom_sendLngLat',data)
-      //给地图下面那个框，发数据
-      bus.$emit('center_bottom_sendPieceId',data)
+      bus.$emit('sendLngLat',data)
+      //给右上角发tunnelId, 获取它对应的图片
+      bus.$emit('sendTunnelId',data)
     },
     getData() {
       this.pageflag = true

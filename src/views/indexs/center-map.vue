@@ -64,7 +64,7 @@ export default {
   },
   created() {
     // 接收右下角表格返回的经纬度, 在地图中定位其具体位置
-    bus.$on('right_bottom_sendLngLat',(data) => {
+    bus.$on('sendLngLat',(data) => {
       console.log("center_map",data)
       this.dataLngLat = data
       // 参数1: 坐标；参数2: 是否立即过度到目标; 参数3: 如果是的话，几秒钟

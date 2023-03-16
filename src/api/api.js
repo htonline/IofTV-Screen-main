@@ -83,6 +83,25 @@ export const getTunnelData = async (params) => {
         return error;
     }
 }
+
+// http://localhost:9090/picture/?tunnelId=1
+export const getPictureByTunnelID = async (params) => {
+    try {
+        // 加密参数
+        params = {
+            tunnelId: params
+        }
+        const data = await axios.get(`http://localhost:9090/picture/`, {
+            params: params,
+            headers: configs_ENC.headers
+        },configs_ENC);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
 export const statisticsProvinceNum = async (params) => {
     try {
         // 加密参数

@@ -74,6 +74,10 @@ export const currentPage =  (key,param)=> {
 export const getTunnelData=  (key,param)=> {
     return API.getTunnelData(paramType[key], param)
 }
+
+export const getPictureByTunnelID=  (param)=> {
+    return API.getPictureByTunnelID(param)
+}
 export const statisticsDiseaseTypesCounts=  (key,param)=> {
     return API.statisticsDiseaseTypesCounts(paramType[key], param)
 }
