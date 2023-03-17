@@ -7,8 +7,10 @@
       </div>
       <div class="content" style="position: absolute; bottom: 0; transform: translateY(50%)">
         <!--        是否修复-->
-        <h2><span v-if="tunnelState == 4" style="color: #07f7a8;">已修复</span></h2>
-        <h2><span v-if="tunnelState != 4" style="color: #f5023d;">未修复</span></h2>
+        <div v-if="tunnelState != null">
+          <h2><span v-if="tunnelState == 4" style="color: #07f7a8;">已修复</span></h2>
+          <h2><span v-if="tunnelState != 4" style="color: #f5023d;">未修复</span></h2>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -27,7 +29,7 @@ import bus from '../../utils/bus'
 export default {
   data() {
     return {
-      diseaseType: '路基空洞',
+      diseaseType: '病害类型',
       diseaseDescription: '',
       repairMethod: '',
       tunnelState: null
