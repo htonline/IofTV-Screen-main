@@ -8,10 +8,11 @@
       <div class="content" style="position: absolute; bottom: 0; transform: translateY(50%)">
         <!--        是否修复-->
         <div v-if="tunnelState != null">
-          <h2><span v-if="tunnelState == 4" style="color: #07f7a8;">已修复</span></h2>
-          <h2><span v-if="tunnelState == 3" style="color: #e3b337;">正在修复中...</span></h2>
           <h2><span v-if="tunnelState == 1" style="color: #f5023d;">未修复</span></h2>
-          <h2><span v-if="tunnelState == 2" style="color: #f5023d;">未修复</span></h2>
+          <h2><span v-if="tunnelState == 2" style="color: #FFFF00;">未修复</span></h2>
+          <h2><span v-if="tunnelState == 3" style="color: #e3b337;">正在修复中...</span></h2>
+          <h2><span v-if="tunnelState == 4" style="color: #07f7a8;">已修复</span></h2>
+
         </div>
       </div>
     </div>
