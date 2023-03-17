@@ -5,15 +5,16 @@
         <h2>{{ diseaseType }}</h2>
         <p>{{ diseaseDescription }}</p>
       </div>
+      <div class="content" style="position: absolute; bottom: 0; transform: translateY(50%)">
+        <!--        是否修复-->
+        <h2><span v-if="tunnelState == 4" style="color: #07f7a8;">已修复</span></h2>
+        <h2><span v-if="tunnelState != 4" style="color: #f5023d;">未修复</span></h2>
+      </div>
     </div>
     <div class="right">
       <div class="content">
         <h2>治疗方式</h2>
         <p>{{ repairMethod }}</p>
-      </div>
-      <div class="content">
-<!--        是否修复-->
-        <h2>描述性内容</h2>
       </div>
     </div>
   </div>
@@ -29,7 +30,7 @@ export default {
       diseaseType: '路基空洞',
       diseaseDescription: '',
       repairMethod: '',
-      tunnelState: ""
+      tunnelState: null
     };
   },
 
