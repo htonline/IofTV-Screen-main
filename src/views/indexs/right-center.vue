@@ -13,7 +13,6 @@ export default {
       gatewayno: '',
       config: {
         showValue: true,
-        unit: "次",
         data: []
       },
 
