@@ -133,7 +133,7 @@ export const statisticsDiseaseTypesCounts = async (params) => {
     try {
         // 加密参数
         params = isEncryptionParam(params)
-        const data = await axios.get(`http://localhost:9090/piece/statisticsDiseaseTypesCounts`, {
+        const data = await axios.get(`http://localhost:9090/tunnel/statisticsDiseaseTypesCounts`, {
             params: params,
             headers: configs_ENC.headers
         }, configs_ENC);
