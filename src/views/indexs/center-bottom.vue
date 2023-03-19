@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { currentGET } from "api";
+import { statisticsRepairRateofEachCity } from "api/modules";
 import { graphic } from "echarts";
 export default {
   data() {
@@ -24,10 +24,10 @@ export default {
   methods: {
     getData() {
       this.pageflag = true;
-      currentGET("big6", { companyName: this.companyName }).then((res) => {
+      statisticsRepairRateofEachCity().then((res) => {
         console.log("修复计划", res);
         if (res.success) {
-          this.init(res.data);
+          this.init(res.object);
         } else {
           this.pageflag = false;
           this.$Message({
@@ -89,7 +89,7 @@ export default {
           top: "20px",
         },
         xAxis: {
-          data: newData.category,
+          data: newData.city,
           axisLine: {
             lineStyle: {
               color: "#B4B4B4",
@@ -136,7 +136,7 @@ export default {
                 { offset: 1, color: "#3EACE5" },
               ]),
             },
-            data: newData.barData,
+            data: newData.fixedCount,
           },
           {
             name: "计划修复",
@@ -152,7 +152,7 @@ export default {
               ]),
             },
             z: -12,
-            data: newData.lineData,
+            data: newData.totalCount,
           },
           {
             name: "修复率",
@@ -165,7 +165,7 @@ export default {
             itemStyle: {
               color: "#F02FC2",
             },
-            data: newData.rateData,
+            data: newData.fixedRate,
           },
         ],
       };

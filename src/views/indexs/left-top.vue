@@ -33,6 +33,7 @@
 
 <script>
 import { currentGET } from 'api/modules'
+import {countDiseaseStatus} from "@/api/api";
 let style = {
     fontSize: 24
 }
@@ -41,10 +42,14 @@ export default {
         return {
             options: {},
             userOverview: {
-                alarmNum: 0,
-                offlineNum: 0,
-                onlineNum: 0,
-                totalNum: 0,
+                // 红色
+                unfix: 0,
+                // 橙色
+                fixing: 0,
+                // 绿色
+                fixed: 0,
+                // 总数
+                total: 0,
             },
             pageflag: true,
             timer: null,
@@ -110,27 +115,27 @@ export default {
         },
         getData() {
             this.pageflag = true;
-            currentGET("big2").then((res) => {
+            countDiseaseStatus().then((res) => {
                 if (!this.timer) {
                     console.log("设备总览", res);
                 }
                 if (res.success) {
-                    this.userOverview = res.data;
+                    this.userOverview = res.object;
                     this.onlineconfig = {
                         ...this.onlineconfig,
-                        number: [res.data.onlineNum]
+                        number: [res.object.fixed]
                     }
                     this.config = {
                         ...this.config,
-                        number: [res.data.totalNum]
+                        number: [res.object.total]
                     }
                     this.offlineconfig = {
                         ...this.offlineconfig,
-                        number: [res.data.offlineNum]
+                        number: [res.object.fixing]
                     }
                     this.laramnumconfig = {
                         ...this.laramnumconfig,
-                        number: [res.data.alarmNum]
+                        number: [res.object.unfix]
                     }
                     this.switper()
                 } else {

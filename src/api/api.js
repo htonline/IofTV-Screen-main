@@ -70,6 +70,20 @@ export const GET = async (url, params) => {
     }
 }
 
+export const countDiseaseStatus = async (params) => {
+    try {
+        // 加密参数
+        params = isEncryptionParam(params)
+        const data = await axios.get(`http://localhost:9090/tunnel/countDiseaseStatus`, {
+            params: params,
+            headers: configs_ENC.headers
+        }, configs_ENC);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
 export const getTunnelData = async (params) => {
     try {
         // 加密参数
@@ -128,6 +142,22 @@ export const statisticsDiseaseTypesCounts = async (params) => {
         return error;
     }
 }
+
+export const statisticsRepairRateofEachCity = async (params) => {
+    try {
+        // 加密参数
+        params = isEncryptionParam(params)
+        const data = await axios.get(`http://localhost:9090/tunnel/statisticsRepairRateofEachCity`, {
+            params: params,
+            headers: configs_ENC.headers
+        }, configs_ENC);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
+
 
 export const getGeoInformationByIP = async (params) => {
     try {
