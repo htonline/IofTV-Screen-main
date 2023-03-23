@@ -157,9 +157,19 @@ export const statisticsRepairRateofEachCity = async (params) => {
     }
 }
 
+export const loginRequest = async (params) => {
+    try {
+        // 加密参数
+        // params = isEncryptionParam(params)
+        const data = await axios.post(`http://localhost:9090/user/login`, params);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
 
 
-export const getGeoInformationByIP = async (params) => {
+export const getGeoInformationByIp = async (params) => {
     try {
         // 加密参数
         params = isEncryptionParam(params)

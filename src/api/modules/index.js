@@ -95,6 +95,16 @@ export const statisticsProvinceNum = (key,param)=> {
     return API.statisticsProvinceNum(paramType[key], param)
 }
 
+export const getGeoInformationByIp = (key,param)=> {
+    return API.getGeoInformationByIp(paramType[key], param)
+}
+
+
+
+export const loginRequest = (param)=> {
+    return API.loginRequest(param)
+}
+
 
 /**
  * 通用POST

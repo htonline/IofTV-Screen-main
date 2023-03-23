@@ -137,7 +137,7 @@ export default {
                         ...this.laramnumconfig,
                         number: [res.object.unfix]
                     }
-                    this.switper()
+                    // this.switper()
                 } else {
                     this.pageflag = false;
                     this.$Message.warning(res.msg);
@@ -145,15 +145,15 @@ export default {
             });
         },
         //轮询
-        switper() {
-            if (this.timer) {
-                return
-            }
-            let looper = (a) => {
-                this.getData()
-            };
-            this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
-        },
+        // switper() {
+        //     if (this.timer) {
+        //         return
+        //     }
+        //     let looper = (a) => {
+        //         this.getData()
+        //     };
+        //     this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
+        // },
     },
 };
 </script>

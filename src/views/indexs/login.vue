@@ -30,12 +30,17 @@
 </template>
 
 <script>
+
+import { loginRequest } from "api/modules";
 export default {
   name: "Login",
   data() {
     return {
       // 定义一个user对象，给用户名绑定它的username, 密码绑定它的password
-      user: {},
+      user: {
+        username: "",
+        password: "",
+      },
 
       rules: {
         // 这个username适合prop的名字对应的
@@ -52,23 +57,16 @@ export default {
   },
   methods: {
     login() {
-      this.$refs["userForm"].validate((valid) => {
-        if (valid) {
-          // 校验合法时，才发送请求给后端
-          this.request.post("http://localhost:9090/user/login", this.user).then(res => {
-            if (res.code == 200) {
-              // 存储用户信息到浏览器
-              localStorage.setItem("user", JSON.stringify(res.object))
-              // 跳转到主页去
-              this.$router.push("/home")
-              this.$message.success("登录成功")
-            } else {
-              // 输出错误原因
-              this.$message.error(res.message)
-            }
-          })
+      loginRequest(this.user).then((res) => {
+        console.log("login",res)
+        if (!res) {
+          this.$router.push("/")
+          // this.$message.error("用户名或密码错误")
+        } else {
+          this.$router.push("/")
         }
-      });
+
+      })
     }
   }
 }
