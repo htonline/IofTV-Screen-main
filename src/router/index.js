@@ -10,22 +10,28 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const routes = [  {
-  path: '/',
-  redirect: '/index',
-},
-{
-  path: '/home',
-  name: 'home',
-  component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/home.vue'),
-  children:[
+const routes = [
     {
-      path: '/index',
-      name: 'index',
-      component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/indexs/index.vue'),
-    }
-  ]
-}, 
+      path: '/',
+      redirect: '/index',
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/indexs/login.vue')
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/home.vue'),
+      children:[
+        {
+          path: '/index',
+          name: 'index',
+          component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/indexs/index.vue'),
+        }
+      ]
+    },
 ];
 const router = new VueRouter({
   mode: "hash",
