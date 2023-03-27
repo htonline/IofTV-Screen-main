@@ -19,7 +19,7 @@
           <div class="guang"></div>
           <div class="d-flex jc-center">
             <div class="title">
-              <span class="title-text">雷达数据平台开发</span>
+              <span class="title-text">雷达数据平台开发123</span>
             </div>
           </div>
           <div class="timers">

@@ -57,16 +57,23 @@ export default {
   },
   methods: {
     login() {
-      loginRequest(this.user).then((res) => {
-        console.log("login",res)
-        if (!res) {
-          this.$router.push("/")
-          // this.$message.error("用户名或密码错误")
+      // 表单校验是否合法; 合法则发送请求
+      this.$refs['userForm'].validate((valid) => {
+        if (valid) {
+          loginRequest(this.user).then((res) => {
+            console.log("login",res)
+            // 如果登录成功
+            if (res) {
+              this.$router.push("/index")
+            } else {
+              this.$message.error("用户名或密码错误")
+            }
+          })
         } else {
-          this.$router.push("/")
+          return false;
         }
-
       })
+
     }
   }
 }

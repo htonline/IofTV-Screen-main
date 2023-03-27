@@ -13,7 +13,7 @@ Vue.use(VueRouter);
 const routes = [
     {
       path: '/',
-      redirect: '/index',
+      redirect: '/login',
     },
     {
       path: '/login',
@@ -30,7 +30,8 @@ const routes = [
           name: 'index',
           component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/indexs/index.vue'),
         }
-      ]
+      ],
+        meta: {requireAuth: true}
     },
 ];
 const router = new VueRouter({
