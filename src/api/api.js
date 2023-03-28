@@ -14,10 +14,14 @@ export { baseUrl };
 // axios.defaults.withCredentials = true;
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
+    // 用上之后, 接下来的请求都会带上token, 后端设置拦截器验证token是否合法: 如果不合法, 就无法请求数据
     // 在发送请求之前做些什么 传token
-    let token = localStorage.getItem("token");
+    // 从浏览器中获取user对象, 如果有,就转换为对象; 没有就赋值空对象{};
+    let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+    if (user) {
+        config.headers.common['token'] = user.token;  //Authorization
+    }
     config.headers.common['Content-Type'] = "application/json;charset=utf-8";
-    config.headers.common['token'] = token;  //Authorization
     return config;
 }, function (error) {
     // 对请求错误做些什么
