@@ -168,6 +168,17 @@ export const loginRequest = async (params) => {
     }
 }
 
+export const registerRequest = async (params) => {
+    try {
+        // 加密参数
+        // params = isEncryptionParam(params)
+        const data = await axios.post(`http://localhost:9090/user/register`, params);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
 
 export const getGeoInformationByIp = async (params) => {
     try {

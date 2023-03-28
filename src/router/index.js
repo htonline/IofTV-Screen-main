@@ -21,6 +21,11 @@ const routes = [
       component: () => import('../views/indexs/login.vue')
     },
     {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../views/indexs/register.vue')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/home.vue'),
@@ -31,7 +36,6 @@ const routes = [
           component: () => import(/* webpackChunkName: "LSD.bighome" */ '../views/indexs/index.vue'),
         }
       ],
-        meta: {requireAuth: true}
     },
 ];
 const router = new VueRouter({

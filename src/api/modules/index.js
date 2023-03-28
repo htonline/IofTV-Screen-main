@@ -105,6 +105,11 @@ export const loginRequest = (param)=> {
     return API.loginRequest(param)
 }
 
+export const registerRequest = (param)=> {
+    return API.registerRequest(param)
+}
+
+
 
 /**
  * 通用POST
