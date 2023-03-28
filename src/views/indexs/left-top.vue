@@ -119,28 +119,28 @@ export default {
                 if (!this.timer) {
                     console.log("设备总览", res);
                 }
-                if (res.success) {
-                    this.userOverview = res.object;
+                if (res.code == '200') {
+                    this.userOverview = res.data;
                     this.onlineconfig = {
                         ...this.onlineconfig,
-                        number: [res.object.fixed]
+                        number: [res.data.fixed]
                     }
                     this.config = {
                         ...this.config,
-                        number: [res.object.total]
+                        number: [res.data.total]
                     }
                     this.offlineconfig = {
                         ...this.offlineconfig,
-                        number: [res.object.fixing]
+                        number: [res.data.fixing]
                     }
                     this.laramnumconfig = {
                         ...this.laramnumconfig,
-                        number: [res.object.unfix]
+                        number: [res.data.unfix]
                     }
                     // this.switper()
                 } else {
                     this.pageflag = false;
-                    this.$Message.warning(res.msg);
+                    this.$Message.warning(res.message);
                 }
             });
         },

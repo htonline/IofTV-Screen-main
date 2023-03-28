@@ -48,8 +48,8 @@ export default {
         if (!this.timer) {
           console.log("病害类型总览", res);
         }
-        if (res.success) {
-          this.countUserNumData = res.object
+        if (res.code == '200') {
+          this.countUserNumData = res.data
           this.$nextTick(() => {
             this.init()
             this.switper()

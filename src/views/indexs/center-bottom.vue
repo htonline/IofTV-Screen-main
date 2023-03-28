@@ -26,12 +26,12 @@ export default {
       this.pageflag = true;
       statisticsRepairRateofEachCity().then((res) => {
         console.log("修复计划", res);
-        if (res.success) {
-          this.init(res.object);
+        if (res.code == '200') {
+          this.init(res.data);
         } else {
           this.pageflag = false;
           this.$Message({
-            text: res.msg,
+            text: res.message,
             type: "warning",
           });
         }

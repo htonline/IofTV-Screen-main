@@ -127,7 +127,7 @@ export default {
       // 获取隧道信息的所有数据
       getTunnelData().then(res => {
         console.log("getTunnelData:", res);
-        this.list = res.object
+        this.list = res.data
         let timer = setTimeout(() => {
           clearTimeout(timer)
           // this.defaultOption.step=this.$store.state.setting.defaultOption.step

@@ -42,10 +42,10 @@ export default {
       // 统计各省份，病害信息数量
       statisticsProvinceNum().then(res=>{
         console.log("统计各省份，病害信息数量",res)
-        if (res.success) {
+        if (res.code == '200') {
           this.config = {
             ...this.config,
-            data: res.object
+            data: res.data
           }
           // 循环访问数据库，统计数据
           // this.switper()
@@ -53,31 +53,11 @@ export default {
           this.pageflag = false
           this.srcList = []
           this.$Message({
-            text: res.msg,
+            text: res.message,
             type: 'warning'
           })
         }
       })
-      // currentGET('big7', { gatewayno: this.gatewayno }).then(res => {
-      //
-      //   if (!this.timer) {
-      //     console.log('报警排名', res);
-      //   }
-      //   if (res.success) {
-      //     this.config = {
-      //       ...this.config,
-      //       data: res.data
-      //     }
-      //     this.switper()
-      //   } else {
-      //     this.pageflag = false
-      //     this.srcList = []
-      //     this.$Message({
-      //       text: res.msg,
-      //       type: 'warning'
-      //     })
-      //   }
-      // })
     },
   },
 };

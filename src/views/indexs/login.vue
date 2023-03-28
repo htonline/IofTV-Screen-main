@@ -63,7 +63,7 @@ export default {
           loginRequest(this.user).then((res) => {
             console.log("login",res)
             // 如果登录成功
-            if (res) {
+            if (res.code == '200') {
               this.$router.push("/index")
             } else {
               this.$message.error("用户名或密码错误")
