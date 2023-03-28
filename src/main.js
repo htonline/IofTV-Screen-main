@@ -16,6 +16,10 @@ import "@/assets/css/index.scss"
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// viewer图片预览组件
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+
 
 import * as filters from '@/directives/filters'
 
@@ -39,6 +43,14 @@ Vue.use(borderBox13)
 Vue.use(borderBox8)
 Vue.use(digitalFlop)
 Vue.use(capsuleChart)
+
+// viewer图片预览组件
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
+
 // 全局数据过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 new Vue({

@@ -1,9 +1,9 @@
 <template>
-  <div class="slider">
+  <div class="slider" v-viewer="{movable: false}">
     <div class="slider-container" :style="{ transform: 'translateX(' + (-currentIndex * width) + 'px)' }">
-      <div class="slider-item" v-for="(item, index) in items" :key="index" :style="{ width: width + 'px' }">
-        <img :src="item.image" alt="" class="pictureSize">
-      </div>
+        <div class="slider-item" v-for="(item, index) in items" :key="index" :style="{ width: width + 'px' }">
+          <img :src="item.image" alt="" class="pictureSize">
+        </div>
     </div>
     <div class="slider-dots">
       <span
