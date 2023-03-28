@@ -32,7 +32,7 @@ export default {
       getPictureByTunnelID(data.pieceId).then(res => {
         console.log("Picture从数据中拿出来的结果", res)
         // 将数组中url那一列单独拿出来，做一个数组
-        this.urls = res.object.map(({ url }) => url);
+        this.urls = res.data.map(({ url }) => url);
         // 将每个url的值都加上require (require只能拼接，不能只放变量)
         this.requiredUrls = this.urls.map(url => require("@/assets/"+url));
         // 轮播图清空
