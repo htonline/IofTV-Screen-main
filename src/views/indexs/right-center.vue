@@ -1,5 +1,5 @@
 <template>
-  <div id="main" style="width: 100%; height: 300px;"></div>
+  <div id="main" style="width: 100%; height: 250px;"></div>
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -27,6 +27,15 @@ export default {
 
       this.option = {
         tooltip: {},
+        toolbox: {
+          feature: {
+            dataZoom: {
+              yAxisIndex: "none",
+            },
+            restore: {},
+            saveAsImage: {},
+          },
+        },
         xAxis: {
           type: 'category',
           data: this.xData
@@ -35,6 +44,18 @@ export default {
           type: 'category',
           data: this.yData
         },
+        // 配置数据缩放，可以通过鼠标滚轮或拖拽实现。
+        dataZoom: [
+          {
+            type: "inside",
+            start: 0,
+            end: 10,
+          },
+          {
+            start: 0,
+            end: 10,
+          },
+        ],
         visualMap: {
           min: 0,
           max: 1,
