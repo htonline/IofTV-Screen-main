@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <div ref="chart" style="width: 100%; height: 500px;"></div>
-  </div>
+  <div id="main" style="height: 270px;"></div>
 </template>
 <script>
-import * as echarts from 'echarts';
+import * as echarts from "echarts";
 
 export default {
-  name: 'LargeAreaChart',
+  name: "Chart",
   mounted() {
-    const chartDom = this.$refs.chart;
+    const chartDom = document.getElementById("main");
     const myChart = echarts.init(chartDom);
-    let option;
 
     let base = +new Date(1968, 9, 3);
     let oneDay = 24 * 3600 * 1000;
@@ -19,80 +16,77 @@ export default {
     let data = [Math.random() * 300];
     for (let i = 1; i < 20000; i++) {
       var now = new Date((base += oneDay));
-      date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+      date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"));
       data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
     }
 
-    option = {
+    const option = {
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         position: function (pt) {
-          return [pt[0], '10%'];
-        }
+          return [pt[0], "10%"];
+        },
       },
       title: {
-        left: 'center',
-        text: 'Large Area Chart'
+        left: "center",
+        text: "Large Area Chart",
       },
       toolbox: {
         feature: {
           dataZoom: {
-            yAxisIndex: 'none'
+            yAxisIndex: "none",
           },
           restore: {},
-          saveAsImage: {}
-        }
+          saveAsImage: {},
+        },
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: date
+        data: date,
       },
       yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%']
+        type: "value",
+        boundaryGap: [0, "100%"],
       },
       dataZoom: [
         {
-          type: 'inside',
+          type: "inside",
           start: 0,
-          end: 10
+          end: 10,
         },
         {
           start: 0,
-          end: 10
-        }
+          end: 10,
+        },
       ],
       series: [
         {
-          name: 'Fake Data',
-          type: 'line',
-          symbol: 'none',
-          sampling: 'lttb',
+          name: "Fake Data",
+          type: "line",
+          symbol: "none",
+          sampling: "lttb",
           itemStyle: {
-            color: 'rgb(255, 70, 131)'
+            color: "rgb(255, 70, 131)",
           },
           areaStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgb(255, 158, 68)'
+                color: "rgb(255, 158, 68)",
               },
               {
                 offset: 1,
-                color: 'rgb(255, 70, 131)'
-              }
-            ])
+                color: "rgb(255, 70, 131)",
+              },
+            ]),
           },
-          data: data
-        }
-      ]
+          data: data,
+        },
+      ],
     };
 
     option && myChart.setOption(option);
-  }
+  },
 };
 </script>
-<style>
-/* 样式可以按照您的需求进行更改 */
-</style>
