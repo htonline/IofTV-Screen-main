@@ -25,8 +25,14 @@ export default {
       this.noise.seed(Math.random());
       const data = this.generateData(2, -5, 5);
 
+      console.log("data",data)
+      console.log("noise",this.noise)
+      console.log("xData",this.xData)
+      console.log("yData",this.yData)
+
       this.option = {
         tooltip: {},
+        // 右上角的还原/下载图片功能
         toolbox: {
           feature: {
             dataZoom: {
@@ -44,7 +50,7 @@ export default {
           type: 'category',
           data: this.yData
         },
-        // 配置数据缩放，可以通过鼠标滚轮或拖拽实现。
+        // 图片下方的伸缩移动功能
         dataZoom: [
           {
             type: "inside",
