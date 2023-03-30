@@ -3,6 +3,7 @@
 </template>
 <script>
 import * as echarts from 'echarts';
+import XLSX from 'xlsx';
 
 export default {
   name: "Chart",
@@ -16,6 +17,7 @@ export default {
   },
   mounted() {
     this.drawChart();
+    this.readFileExcel();
   },
   methods: {
     drawChart() {
@@ -102,7 +104,25 @@ export default {
       myChart.setOption(this.option);
     },
 
+    // 读取文件这里整不会，肚子疼撤了
+    readFileExcel() {
+      const file = new FileReader("@/assets/file/data.xlsx");
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = (e) => {
+        const dataExcel = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(dataExcel, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const cellAddress = { c: 1, r: 0 };
+        const desiredCell = worksheet[XLSX.utils.encode_cell(cellAddress)];
+        const cellValue = desiredCell ? desiredCell.v : undefined;
+        console.log("cellValue",cellValue);}
+    },
+
+
     generateData(theta, min, max) {
+
       const data = [];
       for (let i = 0; i <= 200; i++) {
         for (let j = 0; j <= 100; j++) {
@@ -115,6 +135,7 @@ export default {
       }
       return data;
     },
+
     getNoiseHelper() {
       class Grad {
         constructor(x, y, z) {
