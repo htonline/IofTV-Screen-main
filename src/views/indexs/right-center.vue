@@ -95,9 +95,10 @@ export default {
         ],
 
         // 定义不同的值对应不同的颜色
+        // 最小值-11000, 最大值20000
         visualMap: {
-          min: 0,
-          max: 500,
+          min: -11000,
+          max: 18000,
           calculable: true,
           realtime: false,
           inRange: {
