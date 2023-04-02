@@ -18,34 +18,45 @@ export default {
     }
   },
   mounted() {
-    this.drawChart();
+    // 使用 excelData() 函数检索数据。这个函数可能需要一些时间来检索数据，在此期间，drawChart() 函数继续执行而不等待数据被检索。
+    //这意味着当在 drawChart() 函数中记录 this.data 变量时，数据可能尚未被检索，变量仍然为空。
+
+    this.generateData2().then(() => {
+      this.drawChart();
+    }).catch(err => console.error(err));
 
   },
 
   methods: {
+    // generateData2() 方法返回一个 Promise，
+    // 在数据检索完成时解决，mounted() 方法调用 generateData2() 方法并等待 Promise 解决后才调用 drawChart() 函数。
+    // 这确保了在尝试绘制图表之前数据可用
+    generateData2() {
+      return new Promise((resolve, reject) => {
+        excelData().then(res => {
+          console.log("res", res);
+          this.data = res.data.dataList
+          this.xData = res.data.rowList
+          this.yData = res.data.colList
+          console.log("data_fun",this.data)
+          console.log("xData_fun",this.xData)
+          console.log("yData_fun",this.yData)
+          resolve();
+        }).catch(err => reject(err))
+      })
+    },
     drawChart() {
       const chartDom = document.getElementById('main');
       const myChart = echarts.init(chartDom);
 
       this.noise.seed(Math.random());
       // this.data = this.generateData(2, -5, 5);
+      this.generateData2();
 
-
-      excelData().then(res => {
-        console.log("res", res);
-        this.data = res.data.dataList
-        this.xData = res.data.colList
-        this.yData = res.data.rowList
-        console.log("data_excel",this.data)
-        console.log("xData_excel",this.xData)
-        console.log("yData_excel",this.yData)
-
-      })
-      //
-      // console.log("data",this.data)
+      console.log("data",this.data)
       console.log("noise",this.noise)
-      // console.log("xData",this.xData)
-      // console.log("yData",this.yData)
+      console.log("xData",this.xData)
+      console.log("yData",this.yData)
 
       this.option = {
         tooltip: {},
