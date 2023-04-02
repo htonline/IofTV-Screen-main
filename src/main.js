@@ -20,6 +20,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 
+// 处理excel文件
+import XLSX from 'xlsx';
+window.XLSX = XLSX;
+
 
 import * as filters from '@/directives/filters'
 

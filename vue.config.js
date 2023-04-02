@@ -57,6 +57,19 @@ module.exports = {
     //   })
   },
   configureWebpack: config => {
+
+    // 配置Webpack处理Excel文件
+    config.module.rules.push(
+        {
+          test: /\.(xlsx|xls)$/,
+          use: [
+            {
+              loader: 'xlsx-loader',
+            }
+          ]
+        }
+    );
+
     // 给输出的js名称添加hash
     config.output.filename = "static/js/[name].[hash].js";
     config.output.chunkFilename = "static/js/[name].[hash].js";
@@ -107,6 +120,7 @@ module.exports = {
             reuseExistingChunk: true,
             enforce: true
           },
+
         }
       }
     };

@@ -75,6 +75,10 @@ export const countDiseaseStatus=  (key,param)=> {
     return API.countDiseaseStatus(paramType[key], param)
 }
 
+export const excelData= (param) => {
+     return API.excelData(param)
+}
+
 export const getTunnelData=  (key,param)=> {
     return API.getTunnelData(paramType[key], param)
 }

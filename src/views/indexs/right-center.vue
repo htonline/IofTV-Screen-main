@@ -3,7 +3,8 @@
 </template>
 <script>
 import * as echarts from 'echarts';
-import XLSX from 'xlsx';
+
+import {excelData} from "api/modules"
 
 export default {
   name: "Chart",
@@ -13,24 +14,38 @@ export default {
       xData: [],
       yData: [],
       option: null,
+      data: []
     }
   },
   mounted() {
     this.drawChart();
-    this.readFileExcel();
+
   },
+
   methods: {
     drawChart() {
       const chartDom = document.getElementById('main');
       const myChart = echarts.init(chartDom);
 
       this.noise.seed(Math.random());
-      const data = this.generateData(2, -5, 5);
+      // this.data = this.generateData(2, -5, 5);
 
-      console.log("data",data)
+
+      excelData().then(res => {
+        console.log("res", res);
+        this.data = res.data.dataList
+        this.xData = res.data.colList
+        this.yData = res.data.rowList
+        console.log("data_excel",this.data)
+        console.log("xData_excel",this.xData)
+        console.log("yData_excel",this.yData)
+
+      })
+      //
+      // console.log("data",this.data)
       console.log("noise",this.noise)
-      console.log("xData",this.xData)
-      console.log("yData",this.yData)
+      // console.log("xData",this.xData)
+      // console.log("yData",this.yData)
 
       this.option = {
         tooltip: {},
@@ -44,14 +59,17 @@ export default {
             saveAsImage: {},
           },
         },
+        // x轴
         xAxis: {
           type: 'category',
           data: this.xData
         },
+        // y轴
         yAxis: {
           type: 'category',
           data: this.yData
         },
+
         // 图片下方的伸缩移动功能
         dataZoom: [
           {
@@ -64,9 +82,11 @@ export default {
             end: 10,
           },
         ],
+
+        // 定义不同的值对应不同的颜色
         visualMap: {
           min: 0,
-          max: 1,
+          max: 500,
           calculable: true,
           realtime: false,
           inRange: {
@@ -89,7 +109,7 @@ export default {
           {
             name: 'Gaussian',
             type: 'heatmap',
-            data: data,
+            data: this.data,
             emphasis: {
               itemStyle: {
                 borderColor: '#333',
@@ -102,22 +122,6 @@ export default {
         ]
       };
       myChart.setOption(this.option);
-    },
-
-    // 读取文件这里整不会，肚子疼撤了
-    readFileExcel() {
-      const file = new FileReader("@/assets/file/data.xlsx");
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onload = (e) => {
-        const dataExcel = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(dataExcel, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const cellAddress = { c: 1, r: 0 };
-        const desiredCell = worksheet[XLSX.utils.encode_cell(cellAddress)];
-        const cellValue = desiredCell ? desiredCell.v : undefined;
-        console.log("cellValue",cellValue);}
     },
 
 

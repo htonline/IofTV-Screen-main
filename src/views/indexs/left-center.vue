@@ -52,7 +52,7 @@ export default {
           this.countUserNumData = res.data
           this.$nextTick(() => {
             this.init()
-            this.switper()
+            // this.switper()
           })
 
         } else {
@@ -64,24 +64,7 @@ export default {
         }
       })
     },
-    //轮询
-    switper() {
-      if (this.timer) {
-        return
-      }
-      // 不断查询数据库
-      // let looper = (a) => {
-      //   this.getData()
-      // };
-      this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
-      let myChart = this.$refs.charts.chart
-      myChart.on('mouseover', params => {
-        this.clearData()
-      });
-      myChart.on('mouseout', params => {
-        this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
-      });
-    },
+
     init() {
       let total = this.countUserNumData.totalNum;
       let colors = ["#ECA444", "#56B557", "#33A1DB", "#FF0E1D"];

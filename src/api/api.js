@@ -88,6 +88,20 @@ export const countDiseaseStatus = async (params) => {
     }
 }
 
+export const excelData = async (params) => {
+    try {
+        // 加密参数
+        params = isEncryptionParam(params)
+        const data = await axios.get(`http://localhost:9090/excel/excelData`, {
+            params: params,
+            headers: configs_ENC.headers
+        }, configs_ENC);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
 export const getTunnelData = async (params) => {
     try {
         // 加密参数
