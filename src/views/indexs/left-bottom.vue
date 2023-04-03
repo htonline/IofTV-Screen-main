@@ -121,6 +121,8 @@ export default {
       bus.$emit('sendTunnelId',data)
       // 给右下角发数据, 展示病害的详细内容
       bus.$emit("sendDisease", data)
+      // 给右中发数据, 展示雷达数据图
+      bus.$emit("sendRadar", data)
     },
     getData() {
       this.pageflag = true

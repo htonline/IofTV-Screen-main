@@ -18,11 +18,11 @@ export default {
       urls: [],
       // 轮播图
       items: [
-        { image: require("@/assets/img/test1/1.png") },
-        { image: require("@/assets/img/test1/2.png") },
-        { image: require("@/assets/img/test1/3.png") },
-        { image: require("../../assets/img/test1/4.png") },
-        { image: require("../../assets/img/test1/5.png") },
+        // { image: require("@/assets/img/test1/1.png") },
+        // { image: require("@/assets/img/test1/2.png") },
+        // { image: require("@/assets/img/test1/3.png") },
+        // { image: require("../../assets/img/test1/4.png") },
+        // { image: require("../../assets/img/test1/5.png") },
       ]
     }
   },
